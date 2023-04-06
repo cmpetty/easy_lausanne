@@ -13,7 +13,7 @@ import subprocess
 import sys
 from pkg_resources import Requirement, resource_filename
 import logging
-from command import *
+from easy_lausanne.command import *
 import nibabel as ni
 import numpy as np
 import networkx as nx
@@ -93,8 +93,8 @@ def create_annot_label(subject_id,run_500):
             pth = lausanne_spec[p]['fs_label_subdir_name'] % hemi
             try:
                 os.makedirs(op.join(fs_label_dir, pth))
-            except Exception, e:
-                print e
+            except Exception as e:
+                print(e)
 
     comp = [
     ('rh', 'myatlas_36_rh.gcs', 'rh.myaparc_36.annot', 'regenerated_rh_36','myaparc_36'),
@@ -546,8 +546,8 @@ def crop_and_move_datasets(subject_id,output_dir):
             log.info("Making directory %s" % op.join(reg_path, p))
             try:
                 os.makedirs(op.join(reg_path, p))
-            except Exception, e:
-                print e
+            except Exception as e:
+                print(e)
         else:
             log.info("Directory %s already exists" % op.join(reg_path, p))
         ds.append( (op.join(fs_dir, 'label', 'ROI_%s.nii.gz' % p), op.join(reg_path, p, 'ROI_HR_th.nii.gz')) )

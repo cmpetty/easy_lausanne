@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import numpy as np
 import nibabel as nib
 from scipy.stats import mode
 import sys, os
 
 
-print "loading", sys.argv[1]
+print("loading", sys.argv[1])
 mds = nib.load(sys.argv[1])
 out_fname = sys.argv[2]
 
@@ -87,14 +87,14 @@ both = dilated + orig_mask
 new_voxels = (both == 1)
 lbls = views[new_voxels,:]
 
-print "Dilating..."
+print("Dilating...")
 dilation_labels = np.array(
     [mode(l[l>0])[0][0] for l in lbls],
     dtype=lbls.dtype)
 
 ctr_data[new_voxels] = dilation_labels
 
-print "saving", sys.argv[2]
+print("saving", sys.argv[2])
 new_nim_data =np.zeros_like(data)
 new_nim_data[1:-1,1:-1,1:-1] = ctr_data
 new_nim = nib.Nifti1Image(new_nim_data,

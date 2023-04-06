@@ -10,8 +10,8 @@ from time import time
 from glob import glob
 import subprocess
 import shutil
-from command import *
-from maskcreation import lausanne_spec
+from easy_lausanne.command import *
+from easy_lausanne.maskcreation import lausanne_spec
 
 
 def apply_lin_registration(subject_id, output_dir,target_volume,include500):
