@@ -213,7 +213,7 @@ def create_roi(subject_id):
 
     # LOOP throughout all the SCALES
     # (from the one with the highest number of region to the one with the lowest number of regions)
-    parkeys = lausanne_spec.keys()
+    parkeys = list(lausanne_spec.keys())
     values = list()
     for i in range(len(parkeys)):
         values.append(lausanne_spec[parkeys[i]]['number_of_regions'])
