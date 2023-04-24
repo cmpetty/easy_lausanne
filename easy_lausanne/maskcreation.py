@@ -213,11 +213,12 @@ def create_roi(subject_id):
 
     # LOOP throughout all the SCALES
     # (from the one with the highest number of region to the one with the lowest number of regions)
+    ##updated for python3
     parkeys = list(lausanne_spec.keys())
     values = list()
     for i in range(len(parkeys)):
         values.append(lausanne_spec[parkeys[i]]['number_of_regions'])
-    temp = zip(values, parkeys)
+    temp = list(zip(values, parkeys))
     temp.sort(reverse=True)
     values, parkeys = zip(*temp)
     roisMax = np.zeros( (asegdims[0], asegdims[1], asegdims[2]), dtype=np.int16 ) # numpy.ndarray
