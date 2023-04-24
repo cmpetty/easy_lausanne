@@ -496,7 +496,7 @@ def create_wm_mask(subject_id, output_dir):
     for parkey, parval in lausanne_spec.items():
 
         # check if we should subtract the cortical rois from this parcellation
-        if parval.has_key('subtract_from_wm_mask'):
+        if 'subtract_from_wm_mask' in parval:
             if not bool(int(parval['subtract_from_wm_mask'])):
                 continue
         else:
