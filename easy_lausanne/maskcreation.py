@@ -233,7 +233,7 @@ def create_roi(subject_id):
         # create a volume the same size as aseg for storage of all ROIs
         rois = np.zeros( (asegdims[0], asegdims[1], asegdims[2]), dtype=np.int16 ) # numpy.ndarray
 
-        for brk, brv in pg.nodes_iter(data=True):   # slow loop
+        for brk, brv in pg.nodes(data=True):   # slow loop
 
             if brv['dn_hemisphere'] == 'left':
                 hemi = 'lh'
@@ -510,7 +510,7 @@ def create_wm_mask(subject_id, output_dir):
 
         pg = nx.read_graphml(parval['node_information_graphml'])
 
-        for brk, brv in pg.nodes_iter(data=True):
+        for brk, brv in pg.nodes(data=True):
 
             if brv['dn_region'] == 'cortical':
 
