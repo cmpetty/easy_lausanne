@@ -10,7 +10,7 @@ mds = nib.load(sys.argv[1])
 out_fname = sys.argv[2]
 
 # get voxels inside a 1-voxel padding
-data = mds.get_data().astype(np.int64)
+data = mds.get_fdata().astype(np.int64)
 ctr_data = data.copy()[1:-1,1:-1,1:-1]
 orig_mask = (ctr_data > 0).astype(np.uint64)
 dilated = np.zeros_like(orig_mask)

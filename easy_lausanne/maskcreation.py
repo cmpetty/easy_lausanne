@@ -190,7 +190,7 @@ def create_roi(subject_id):
     # load aseg volume
     aseg = ni.load(op.join(fs_dir, 'mri', 'aseg.nii.gz'))
     asegdims = aseg.shape
-    asegd = aseg.get_data()	# numpy.ndarray
+    asegd = aseg.get_fdata()	# numpy.ndarray
 
     # identify cortical voxels, right (3) and left (42) hemispheres
     idxr = np.where(asegd == 3)
@@ -269,7 +269,7 @@ def create_roi(subject_id):
                 runCmd( mri_cmd, log )
 
                 tmp = ni.load(op.join(labelpath, 'tmp.nii.gz'))
-                tmpd = tmp.get_data()
+                tmpd = tmp.get_fdata()
 
                 # find voxel and set them to intensity value in rois
                 idx = np.where(tmpd == 1)
@@ -360,7 +360,7 @@ def create_wm_mask(subject_id, output_dir):
     
     # load ribbon as basis for white matter mask
     fsmask = ni.load(op.join(fs_dir, 'mri', 'ribbon.nii.gz'))
-    fsmaskd = fsmask.get_data()
+    fsmaskd = fsmask.get_fdata()
     
     # Check ribbon values to select correct WM labels
     uvals,ucounts = np.unique(fsmaskd, return_counts=True)
@@ -375,7 +375,7 @@ def create_wm_mask(subject_id, output_dir):
     else:
         raise Exception('Unknown ribbon values in file %s' % fsmask.get_filename())
 
-    wmmask = np.zeros( fsmask.get_data().shape )
+    wmmask = np.zeros( fsmask.get_fdata().shape )
 
     # these data is stored and could be extracted from fs_dir/stats/aseg.txt
 
@@ -388,7 +388,7 @@ def create_wm_mask(subject_id, output_dir):
 
     # remove subcortical nuclei from white matter mask
     aseg = ni.load(op.join(fs_dir, 'mri', 'aseg.nii.gz'))
-    asegd = aseg.get_data()
+    asegd = aseg.get_fdata()
 
     try:
         import scipy.ndimage.morphology as nd
@@ -479,7 +479,7 @@ def create_wm_mask(subject_id, output_dir):
 
     # ADD voxels from 'cc_unknown.nii.gz' dataset
     ccun = ni.load(op.join(fs_dir, 'label', 'cc_unknown.nii.gz'))
-    ccund = ccun.get_data()
+    ccund = ccun.get_fdata()
     idx = np.where(ccund != 0)
     log.info("Add corpus callosum and unknown to wm mask")
     wmmask[idx] = 1
@@ -504,7 +504,7 @@ def create_wm_mask(subject_id, output_dir):
 
         log.info("Loading %s to subtract cortical ROIs from white matter mask" % ('ROI_%s.nii.gz' % parkey) )
         roi = ni.load(op.join(fs_dir, 'label', 'ROI_%s.nii.gz' % parkey))
-        roid = roi.get_data()
+        roid = roi.get_fdata()
 
         assert roid.shape[0] == wmmask.shape[0]
 
@@ -580,7 +580,7 @@ def generate_WM_and_GM_mask(subject_id,output_path):
 
     fout = op.join(fs_dir, 'mri', 'aparc+aseg.nii.gz')    
     niiAPARCimg = ni.load(fout)
-    niiAPARCdata = niiAPARCimg.get_data()
+    niiAPARCdata = niiAPARCimg.get_fdata()
 
     # mri_convert aparc+aseg.mgz aparc+aseg.nii.gz
     WMout = op.join(fs_dir, 'mri', 'fsmask_1mm.nii.gz')
