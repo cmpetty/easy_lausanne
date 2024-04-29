@@ -98,7 +98,7 @@ print("saving", sys.argv[2])
 new_nim_data =np.zeros_like(data)
 new_nim_data[1:-1,1:-1,1:-1] = ctr_data
 new_nim = nib.Nifti1Image(new_nim_data,
-                          mds.get_affine(),
-                          header=mds.get_header())
+                          mds.affine,
+                          header=mds.header)
 
 new_nim.to_filename(out_fname)

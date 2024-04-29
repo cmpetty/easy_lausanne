@@ -60,8 +60,8 @@ if __name__ == "__main__":
             bdir,fname = op.split(args.target_volume)
             target_volume = op.join(bdir,"tmp_"+fname)
             tnim = nib.load(args.target_volume)
-            thdr = tnim.get_header()
-            aff = tnim.get_affine()
+            thdr = tnim.header
+            aff = tnim.affine
             tdata = tnim.get_fdata()
             center = np.diag(aff)[:3] * np.array(tdata.shape) / 2
             new_aff = aff.copy()

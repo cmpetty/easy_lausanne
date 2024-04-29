@@ -314,11 +314,11 @@ def create_roi(subject_id):
         # store volume eg in ROI_scale33.nii.gz
         out_roi = op.join(fs_dir, 'label', 'ROI_%s.nii.gz' % parkey)
         # update the header
-        hdr = aseg.get_header()
+        hdr = aseg.header
         hdr2 = hdr.copy()
         hdr2.set_data_dtype(np.uint16)
         log.info("Save output image to %s" % out_roi)
-        img = ni.Nifti1Image(newrois, aseg.get_affine(), hdr2)
+        img = ni.Nifti1Image(newrois, aseg.affine, hdr2)
         ni.save(img, out_roi)
 
         # dilate cortical regions
@@ -342,7 +342,7 @@ def create_roi(subject_id):
         # store volume eg in ROIv_scale33.nii.gz
         out_roi = op.join(fs_dir, 'label', 'ROIv_%s.nii.gz' % parkey)
         log.info("Save output image to %s" % out_roi)
-        img = ni.Nifti1Image(newrois, aseg.get_affine(), hdr2)
+        img = ni.Nifti1Image(newrois, aseg.affine, hdr2)
         ni.save(img, out_roi)
 
     log.info("[ DONE ]")  
@@ -521,7 +521,7 @@ def create_wm_mask(subject_id, output_dir):
 
     # output white matter mask. crop and move it afterwards
     wm_out = op.join(fs_dir, 'mri', 'fsmask_1mm.nii.gz')
-    img = ni.Nifti1Image(wmmask, fsmask.get_affine(), fsmask.get_header() )
+    img = ni.Nifti1Image(wmmask, fsmask.affine, fsmask.header )
     log.info("Save white matter mask: %s" % wm_out)
     ni.save(img, wm_out)
 
@@ -626,7 +626,7 @@ def generate_WM_and_GM_mask(subject_id,output_path):
 #    for i in SUBCORTICAL[1]:
 #         niiWM[niiAPARCdata == i] = 1
 
-    img = ni.Nifti1Image(niiWM, niiAPARCimg.get_affine(), niiAPARCimg.get_header())
+    img = ni.Nifti1Image(niiWM, niiAPARCimg.affine, niiAPARCimg.header )
     log.info("Save to: " + WMout)
     ni.save(img, WMout)
 
@@ -656,7 +656,7 @@ def generate_WM_and_GM_mask(subject_id,output_path):
 #            niiGM[ niiAPARCdata == i ] = OTHER[2][idx]
 
         log.info("Save to: " + GMout)        
-        img = ni.Nifti1Image(niiGM, niiAPARCimg.get_affine(), niiAPARCimg.get_header())
+        img = ni.Nifti1Image(niiGM, niiAPARCimg.affine, niiAPARCimg.header )
         ni.save(img, GMout)
 
     log.info("[DONE]")
